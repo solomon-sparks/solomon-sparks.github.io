@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Solo Journals</title>
+    <title>Solo Journals 1000</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -81,29 +81,29 @@
       </h1>
     </section>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const navItems = document.querySelectorAll(".nav-item");
-        const dropdowns = document.querySelectorAll(".dropdown-menu");
+      document.addEventListener('DOMContentLoaded', () => {
+        const navItems = document.querySelectorAll('.nav-item');
+        const dropdowns = document.querySelectorAll('.dropdown-menu');
 
         // Set up hover logic per nav item
         navItems.forEach((item) => {
-          const dropdown = item.querySelector(".dropdown-menu");
+          const dropdown = item.querySelector('.dropdown-menu');
 
-          item.addEventListener("mouseenter", () => {
+          item.addEventListener('mouseenter', () => {
             closeAllDropdowns();
-            if (dropdown) dropdown.classList.add("active");
+            if (dropdown) dropdown.classList.add('active');
           });
 
-          item.addEventListener("mouseleave", (e) => {
+          item.addEventListener('mouseleave', (e) => {
             if (!item.contains(e.relatedTarget)) {
-              if (dropdown) dropdown.classList.remove("active");
+              if (dropdown) dropdown.classList.remove('active');
             }
           });
 
           if (dropdown) {
-            dropdown.addEventListener("mouseleave", (e) => {
+            dropdown.addEventListener('mouseleave', (e) => {
               if (!item.contains(e.relatedTarget)) {
-                dropdown.classList.remove("active");
+                dropdown.classList.remove('active');
               }
             });
           }
@@ -111,17 +111,17 @@
 
         // ✅ Core fix: close dropdown if cursor moves into whitespace or logo
         document
-          .querySelector(".header-content")
-          .addEventListener("mouseover", (e) => {
-            const isInsideNavItem = e.target.closest(".nav-item");
-            const isInsideDropdown = e.target.closest(".dropdown-menu");
+          .querySelector('.header-content')
+          .addEventListener('mouseover', (e) => {
+            const isInsideNavItem = e.target.closest('.nav-item');
+            const isInsideDropdown = e.target.closest('.dropdown-menu');
             if (!isInsideNavItem && !isInsideDropdown) {
               closeAllDropdowns();
             }
           });
 
         function closeAllDropdowns() {
-          dropdowns.forEach((el) => el.classList.remove("active"));
+          dropdowns.forEach((el) => el.classList.remove('active'));
         }
       });
     </script>
