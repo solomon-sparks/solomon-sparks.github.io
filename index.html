@@ -4,17 +4,126 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solo Journals</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body style="font-family: 'Gill Sans', sans-serif">
-    <div style="text-align: center">
-      <h1>Solo Journals</h1>
-      <p>Welcome to Solo Journals, your personal journaling space.</p>
-      <img
-        style="width: 90%; max-width: 600px"
-        src="journal.jpg"
-        alt="An Open Joiurnal on a desk
-    "
-      />
+
+  <header>
+    <div class="header-content">
+      <div class="nav-container">
+        <div class="nav-section nav-left">
+          <!-- Left nav items -->
+          <div class="nav-item">
+            <a href="#journals">JOURNALS</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+          <div class="nav-item">
+            <a href="#leather">LEATHER</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+          <div class="nav-item">
+            <a href="#art">ART</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+        </div>
+
+        <div class="logo-container">
+          <a href="#top" class="logo">SOLO</a>
+        </div>
+
+        <div class="nav-section nav-right">
+          <!-- Right nav items -->
+          <div class="nav-item">
+            <a href="#limited">LIMITED EDITION</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+          <div class="nav-item">
+            <a href="about.html">ABOUT</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+          <div class="nav-item">
+            <a href="#search">SEARCH</a>
+            <div class="dropdown-menu">...</div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="dropdown-wrapper">
+      <div class="dropdown-menu">...</div>
+    </div>
+  </header>
+
+  <body>
+    <section class="hero">
+      <h2>Luxury Journals for the Inspired</h2>
+      <p>
+        Refined craftsmanship. Elegant design. Designed to move with your mind.
+      </p>
+      <button class="cta-button">Shop Now</button>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Solo Journals. All rights reserved.</p>
+    </footer>
+    <section
+      style="
+        height: 200vh;
+        background: linear-gradient(120deg, #0099f7, #f11712);
+      "
+    >
+      <h1 style="padding: 200px 40px; font-size: 3rem; color: white">
+        Background Content
+      </h1>
+    </section>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navItems = document.querySelectorAll(".nav-item");
+        const dropdowns = document.querySelectorAll(".dropdown-menu");
+
+        // Set up hover logic per nav item
+        navItems.forEach((item) => {
+          const dropdown = item.querySelector(".dropdown-menu");
+
+          item.addEventListener("mouseenter", () => {
+            closeAllDropdowns();
+            if (dropdown) dropdown.classList.add("active");
+          });
+
+          item.addEventListener("mouseleave", (e) => {
+            if (!item.contains(e.relatedTarget)) {
+              if (dropdown) dropdown.classList.remove("active");
+            }
+          });
+
+          if (dropdown) {
+            dropdown.addEventListener("mouseleave", (e) => {
+              if (!item.contains(e.relatedTarget)) {
+                dropdown.classList.remove("active");
+              }
+            });
+          }
+        });
+
+        // ✅ Core fix: close dropdown if cursor moves into whitespace or logo
+        document
+          .querySelector(".header-content")
+          .addEventListener("mouseover", (e) => {
+            const isInsideNavItem = e.target.closest(".nav-item");
+            const isInsideDropdown = e.target.closest(".dropdown-menu");
+            if (!isInsideNavItem && !isInsideDropdown) {
+              closeAllDropdowns();
+            }
+          });
+
+        function closeAllDropdowns() {
+          dropdowns.forEach((el) => el.classList.remove("active"));
+        }
+      });
+    </script>
   </body>
 </html>
