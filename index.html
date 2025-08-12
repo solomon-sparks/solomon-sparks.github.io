@@ -20,15 +20,24 @@
           <!-- Left nav items -->
           <div class="nav-item">
             <a href="#journals">JOURNALS</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
           <div class="nav-item">
             <a href="#leather">LEATHER</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
           <div class="nav-item">
             <a href="#art">ART</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
         </div>
 
@@ -40,21 +49,33 @@
           <!-- Right nav items -->
           <div class="nav-item">
             <a href="#limited">LIMITED EDITION</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
           <div class="nav-item">
             <a href="about.html">ABOUT</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
           <div class="nav-item">
             <a href="#search">SEARCH</a>
-            <div class="dropdown-menu">...</div>
+            <div class="dropdown-menu">
+              <p>Example 1</p>
+              <p>Example 2</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="dropdown-wrapper">
-      <div class="dropdown-menu">...</div>
+      <div class="dropdown-menu">
+        <p>Example 1</p>
+        <p>Example 2</p>
+      </div>
     </div>
   </header>
 
@@ -85,44 +106,20 @@
         const navItems = document.querySelectorAll('.nav-item');
         const dropdowns = document.querySelectorAll('.dropdown-menu');
 
-        // Set up hover logic per nav item
+        const hideAllDropdowns = () => {
+          dropdowns.forEach((el) => el.classList.remove('active'));
+        };
+
         navItems.forEach((item) => {
           const dropdown = item.querySelector('.dropdown-menu');
-
           item.addEventListener('mouseenter', () => {
-            closeAllDropdowns();
+            hideAllDropdowns();
             if (dropdown) dropdown.classList.add('active');
           });
-
-          item.addEventListener('mouseleave', (e) => {
-            if (!item.contains(e.relatedTarget)) {
-              if (dropdown) dropdown.classList.remove('active');
-            }
+          item.addEventListener('mouseleave', () => {
+            if (dropdown) dropdown.classList.remove('active');
           });
-
-          if (dropdown) {
-            dropdown.addEventListener('mouseleave', (e) => {
-              if (!item.contains(e.relatedTarget)) {
-                dropdown.classList.remove('active');
-              }
-            });
-          }
         });
-
-        // ✅ Core fix: close dropdown if cursor moves into whitespace or logo
-        document
-          .querySelector('.header-content')
-          .addEventListener('mouseover', (e) => {
-            const isInsideNavItem = e.target.closest('.nav-item');
-            const isInsideDropdown = e.target.closest('.dropdown-menu');
-            if (!isInsideNavItem && !isInsideDropdown) {
-              closeAllDropdowns();
-            }
-          });
-
-        function closeAllDropdowns() {
-          dropdowns.forEach((el) => el.classList.remove('active'));
-        }
       });
     </script>
   </body>

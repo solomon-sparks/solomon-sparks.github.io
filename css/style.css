@@ -1,7 +1,7 @@
 /* ========== Root Variables ========== */
 :root {
-  --font-primary: "Barlow Condensed", sans-serif;
-  --font-logo: "Playfair Display", serif;
+  --font-primary: 'Barlow Condensed', sans-serif;
+  --font-logo: 'Playfair Display', serif;
 
   --color-dark: #000;
   --color-accent: #17622e;
@@ -17,14 +17,6 @@
   --spacing-header: 85px;
   --spacing-section: 80px;
   --spacing-gap: 20px;
-}
-
-/* Layering Reference */
-:root {
-  --z-header: 1000;
-  --z-nav-link: 1010;
-  --z-logo: 1015;
-  --z-dropdown: 1005;
 }
 
 /* ========== Base Reset ========== */
@@ -60,19 +52,11 @@ header {
   height: var(--spacing-header);
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(7px);
-  z-index: 1100; /* 👈 increase this */
-}
-
-.site-header {
-  position: relative;
-  z-index: 1002; /* Always above dropdown */
+  z-index: 10;
 }
 
 .header-content {
-  position: relative;
-  z-index: 1002; /* This brings everything inside above the dropdown */
   background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: none;
   display: flex;
   justify-content: center;
 }
@@ -93,19 +77,10 @@ header {
 
 .nav-item > a {
   cursor: pointer;
-  cursor: default; /* shows that it's not meant to be clicked */
   position: relative;
-  z-index: var(--z-nav-link);
 }
 .nav-item {
   position: relative;
-  z-index: 1002;
-  pointer-events: auto;
-}
-.nav-item:hover .dropdown-menu {
-  display: block;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .nav-left {
@@ -127,42 +102,30 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   height: var(--spacing-header);
   padding: 0 35px;
-  z-index: var(--z-nav-link);
-}
-.nav-links .nav-item {
-  position: relative;
-  z-index: 1001; /* Above dropdown too */
-}
-.nav-container,
-.logo-container,
-.nav-item > a {
-  z-index: 1110; /* 👈 must be above the dropdown */
 }
 /* ========== Dropdown Menu ========== */
 .dropdown-wrapper {
   position: relative;
-  z-index: 999;
 }
 .dropdown-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding-top: var(--spacing-header);
-  padding-bottom: 40px;
-  z-index: 1000;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 0;
+  bottom: -0.4rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  font-size: 0.8rem;
+  /* Things that change when active */
+  transition: opacity 0.3s, transform 0.3s;
   opacity: 0;
-  transform: translateY(-20px);
   pointer-events: none;
 }
 
@@ -170,105 +133,24 @@ header {
 .dropdown-menu.active {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
-}
-/* Show dropdown on hover */
-.nav-item:hover .dropdown-menu,
-.dropdown-menu:focus-within {
-  transform: translateY(0);
-}
-.dropdown-wrapper:hover .dropdown-menu {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  display: flex;
-}
-.dropdown-inner {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 60px;
-  padding: 40px 60px;
 }
 
-.dropdown-toggle {
-  position: relative;
-  z-index: 2;
-}
-/* Show when hovering either the nav-item or dropdown-menu */
-.nav-item:hover .dropdown-menu {
-  display: flex;
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.nav-item:hover .dropdown-menu {
-  display: flex;
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.dropdown-column {
-  display: flex;
-  flex-direction: column;
-  min-width: 160px;
-}
-
-.dropdown-column h4 {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  font-family: var(--font-primary);
-  color: var(--color-dark);
-}
-
-.dropdown-column a {
-  font-size: 12px;
-  color: var(--color-text);
-  padding: 5px 0;
-  transition: color 0.3s ease;
-  font-family: var(--font-primary);
-  font-weight: 300;
-}
-
-.dropdown-column a:hover {
-  color: var(--color-accent);
-}
-.dropdown-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 500;
-  display: none;
-  padding-top: var(--spacing-header);
-  transition: opacity 0.3s ease;
-}
-
-.dropdown-overlay.show {
-  display: block;
-  opacity: 1;
+.dropdown-menu p {
+  /* Make it so it doesn't wrap when there are spaces */
+  white-space: nowrap;
+  width: fit-content;
 }
 
 /* ========== Logo ========== */
+
 .logo-container {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
-  z-index: 1002; /* Just to be sure it stays above everything */
 }
 
 .logo {
-  position: relative;
   font-family: var(--font-logo);
   font-size: var(--fs-logo);
   font-weight: 500;
@@ -276,7 +158,7 @@ header {
   letter-spacing: 1px;
   color: var(--color-dark);
   white-space: nowrap;
-  pointer-events: auto; /* restore interaction on actual logo link */
+  pointer-events: auto;
 }
 
 .logo:hover {
