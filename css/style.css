@@ -60,7 +60,7 @@ header {
   height: var(--spacing-header);
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(7px);
-  z-index: 1100; /* 👈 increase this */
+  z-index: 3000; /* 👈 increase this */
 }
 
 .site-header {
@@ -330,4 +330,141 @@ footer {
   color: #777;
   font-size: 14px;
   border-top: 1px solid #eee;
+}
+
+/* ========== Full‑page Slides (Saint Laurent style) ========== */
+html,
+body {
+  height: 100%;
+}
+
+.slides {
+  position: relative;
+  height: 100vh;
+  overflow: hidden; /* disable native scrolling for overlay model */
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(100%); /* default waiting below */
+  transition: transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Active/stack positions */
+.slide.is-active {
+  transform: translateY(0);
+  z-index: 2;
+}
+.slide.is-above {
+  transform: translateY(-100%);
+  z-index: 1;
+}
+.slide.is-below {
+  transform: translateY(100%);
+  z-index: 1;
+}
+
+/* ========== Overlay entrance (incoming slide moves over a static current slide) ========== */
+.slide.entering {
+  z-index: 3; /* above the current active slide */
+  will-change: transform;
+}
+.slide.entering.from-below {
+  transform: translateY(100%); /* start just below the viewport */
+}
+.slide.entering.from-above {
+  transform: translateY(-100%); /* start just above the viewport */
+}
+/* When we add .to-center, it animates into place (0). Keep transition as defined on .slide */
+.slide.entering.to-center {
+  transform: translateY(0);
+}
+
+/* Reverse overlay (scrolling up): current slide moves down off-screen while previous slide is static underneath */
+.slide.exiting {
+  z-index: 3; /* ensure it sits above the static target while it moves */
+  will-change: transform;
+  transform: translateY(0); /* <-- start at center, prevents jump */
+  pointer-events: none;
+}
+
+/* The exiting slide starts at center (0) and animates to below */
+.slide.exiting.to-below {
+  transform: translateY(100%);
+}
+
+/* Utility: temporarily disable slide transitions */
+.slide.no-transition {
+  transition: none !important;
+}
+
+/* Keep header above slides */
+header {
+  z-index: 3000;
+}
+
+/* Keep content visible below the fixed header */
+.slide .content {
+  width: min(1000px, 92vw);
+  padding: calc(var(--spacing-header) + 24px) 24px 56px;
+  color: var(--color-light);
+}
+
+/* Placeholder solid backgrounds (swap for media later) */
+.bg-ink {
+  background: #0c0c0c;
+}
+.bg-ivory {
+  background: #f6f3ee;
+  color: #111;
+}
+.bg-olive {
+  background: #1e5a37;
+}
+.bg-night {
+  background: #101418;
+}
+.bg-crimson {
+  background: #9b1b30;
+}
+
+/* Optional: hide default scrollbar on WebKit while keeping scroll */
+.slides::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.slides::-webkit-scrollbar {
+  display: none;
+}
+
+/* Headline/button styling for slides */
+.slide h1 {
+  font-family: var(--font-logo);
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+.slide p {
+  font-size: clamp(14px, 2.2vw, 20px);
+  max-width: 58ch;
+  margin: 0 auto 24px;
+}
+.slide .cta-button {
+  margin-top: 8px;
+}
+
+/* Legal slide text */
+.legal-note {
+  font-size: 12px;
+  opacity: 0.75;
+  letter-spacing: 0.3px;
 }
